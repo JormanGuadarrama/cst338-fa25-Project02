@@ -54,4 +54,6 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
             // THIS IS WHERE DEFAULT VALUES ARE CREATED
         }
     };
+
+    public abstract PantryDAO pantryDAO();
 }
