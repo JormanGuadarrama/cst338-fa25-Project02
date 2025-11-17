@@ -19,22 +19,21 @@ public class Pantry {
     private int userId;
     private LocalDateTime dateCreated;
 
-    public Pantry() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    public Pantry(int userId) {
             dateCreated = LocalDateTime.now();
-        }
+            this.userId = userId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Pantry that = (Pantry) o;
-        return id == that.id && Objects.equals(dateCreated, that.dateCreated);
+        Pantry pantry = (Pantry) o;
+        return id == pantry.id && userId == pantry.userId && Objects.equals(dateCreated, pantry.dateCreated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateCreated);
+        return Objects.hash(id, userId, dateCreated);
     }
 
     public int getId() {
@@ -43,6 +42,14 @@ public class Pantry {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public LocalDateTime getDateCreated() {

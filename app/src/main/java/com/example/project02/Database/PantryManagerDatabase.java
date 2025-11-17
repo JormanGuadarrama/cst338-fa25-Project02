@@ -7,16 +7,19 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.project02.Database.Entities.User;
 import com.example.project02.Database.Entities.Pantry;
+import com.example.project02.Database.typeConverters.LocalDateTypeConverter;
 import com.example.project02.MainActivity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, Pantry.class}, version = 1, exportSchema = false)
+@TypeConverters(LocalDateTypeConverter.class)
+@Database(entities = {User.class, Pantry.class}, version = 3, exportSchema = false)
 public abstract class PantryManagerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "PantryManagerDatabase";
@@ -50,10 +53,20 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             Log.i(MainActivity.TAG, "DATABASE CREATED!");
-            //TODO: add databaseWriteExecutor.execute(() -> {...})
-            // THIS IS WHERE DEFAULT VALUES ARE CREATED
+            databaseWriteExecutor.execute(() -> {
+                UserDAO dao = INSTANCE.UserDAO();
+                dao.deleteAll();
+                User admin = new User("admin1", "admin1");
+                admin.setAdmin(true);
+                dao.insert(admin);
+
+                User testUser1 = new User("testuser1", "testuser1");
+                dao.insert(testUser1);
+            });
         }
     };
 
     public abstract PantryDAO pantryDAO();
+
+    public abstract UserDAO UserDAO();
 }

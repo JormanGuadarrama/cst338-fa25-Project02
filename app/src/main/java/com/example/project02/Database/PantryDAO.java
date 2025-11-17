@@ -7,7 +7,6 @@ import androidx.room.Query;
 
 import com.example.project02.Database.Entities.Pantry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -16,5 +15,5 @@ public interface PantryDAO {
     void insert(Pantry pantry);
 
     @Query("SELECT * FROM " + PantryManagerDatabase.PANTRY_TABLE)
-    ArrayList<Pantry> getAllRecords();
+    List<Pantry> getAllRecords();
 }

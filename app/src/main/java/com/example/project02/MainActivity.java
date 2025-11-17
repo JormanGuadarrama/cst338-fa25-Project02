@@ -12,6 +12,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "P2_PANTRYMANAGER";
 
+    //TODO: Add login information
+    int loggedInUserId = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

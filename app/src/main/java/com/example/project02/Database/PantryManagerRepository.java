@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.room.InvalidationTracker;
 
 import com.example.project02.Database.Entities.Pantry;
+import com.example.project02.Database.Entities.User;
 import com.example.project02.MainActivity;
 
 import java.util.ArrayList;
@@ -15,13 +16,15 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class PantryManagerRepository {
-    private PantryDAO pantryDAO;
+    private final PantryDAO pantryDAO;
+    private final UserDAO userDAO;
     private ArrayList<Pantry> allLogs;
 
     public PantryManagerRepository(Application application) {
         PantryManagerDatabase db = PantryManagerDatabase.getDatabase(application);
         this.pantryDAO = db.pantryDAO();
-        this.allLogs = this.pantryDAO.getAllRecords();
+        this.userDAO = db.UserDAO();
+        this.allLogs = (ArrayList<Pantry>) this.pantryDAO.getAllRecords();
 
     }
 
@@ -30,7 +33,7 @@ public class PantryManagerRepository {
                 new Callable<ArrayList<Pantry>>() {
                     @Override
                     public ArrayList<Pantry> call() throws Exception {
-                        return pantryDAO.getAllRecords();
+                        return (ArrayList<Pantry>) pantryDAO.getAllRecords();
                     }
                 }
         );
@@ -45,6 +48,12 @@ public class PantryManagerRepository {
     public void insertPantry(Pantry pantry) {
         PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
             pantryDAO.insert(pantry);
+        });
+    }
+
+    public void insertUser(User... user) {
+        PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
+            userDAO.insert(user);
         });
     }
 }
