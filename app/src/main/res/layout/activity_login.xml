@@ -97,11 +97,17 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/createAccountButton"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:text="Create a new account"
                 android:textAllCaps="false"
-                android:background="@drawable/bg_button_outline"/>
+                android:layout_marginTop="10dp"
+                app:cornerRadius="24dp"
+                app:strokeColor="@color/purple_500"
+                app:strokeWidth="2dp"
+                app:iconGravity="textStart"/>
+
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
