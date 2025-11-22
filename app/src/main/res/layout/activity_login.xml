@@ -24,13 +24,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp">
-
+            <!--                Replace Below with @drawable/ic_logo-->
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_logo"
+                android:src="@drawable/ic_account_black_24dp"
                 android:contentDescription="@string/app_name"
                 android:layout_marginBottom="12dp"/>
 
