@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id 'org.jetbrains.kotlin.android' version '2.0.21'
 }
 
 android {
@@ -8,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.project02"
-        minSdk 24
+        minSdk 26              // Adopt from database branch
         targetSdk 36
         versionCode 1
         versionName "1.0"
@@ -23,10 +24,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_11           // KEEP Java 11
         targetCompatibility JavaVersion.VERSION_11
     }
+
+    kotlinOptions {
+        jvmTarget = "11"     // Match Java version
+    }
+
     buildFeatures {
         viewBinding true
     }
@@ -37,11 +44,25 @@ dependencies {
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
-    // NAVIGATION (keep these!)
+
+    // NAVIGATION
     implementation libs.navigation.fragment.ktx
     implementation libs.navigation.ui.ktx
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
+
+    // ROOM DATABASE
+    def room_version = "2.8.3"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // Optional Room extensions (remove if not needed)
+    implementation "androidx.room:room-rxjava2:$room_version"
+    implementation "androidx.room:room-rxjava3:$room_version"
+    implementation "androidx.room:room-guava:$room_version"
+    implementation "androidx.room:room-paging:$room_version"
+    testImplementation "androidx.room:room-testing:$room_version"
+
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
