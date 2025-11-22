@@ -21,6 +21,9 @@ public interface UserDAO {
     @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " ORDER BY username")
     List<User> getAllUsers();
 
+    @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " WHERE username = :username")
+    User getUserByUsername(String username);
+
     @Query("DELETE FROM " + PantryManagerDatabase.USER_TABLE)
     void deleteAll();
 }

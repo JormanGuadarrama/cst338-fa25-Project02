@@ -53,16 +53,10 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             Log.i(MainActivity.TAG, "DATABASE CREATED!");
-            databaseWriteExecutor.execute(() -> {
-                UserDAO dao = INSTANCE.UserDAO();
-                dao.deleteAll();
-                User admin = new User("admin1", "admin1");
-                admin.setAdmin(true);
-                dao.insert(admin);
-
-                User testUser1 = new User("testuser1", "testuser1");
-                dao.insert(testUser1);
-            });
+            
+            // Insert default users synchronously to avoid race conditions on first launch
+            db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('admin1', 'admin1', 1)");
+            db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('testuser1', 'testuser1', 0)");
         }
     };
 

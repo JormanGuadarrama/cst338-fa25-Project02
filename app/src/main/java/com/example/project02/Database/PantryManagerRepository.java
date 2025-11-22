@@ -3,9 +3,6 @@ package com.example.project02.Database;
 import android.app.Application;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.room.InvalidationTracker;
-
 import com.example.project02.Database.Entities.Pantry;
 import com.example.project02.Database.Entities.User;
 import com.example.project02.MainActivity;
@@ -18,14 +15,11 @@ import java.util.concurrent.Future;
 public class PantryManagerRepository {
     private final PantryDAO pantryDAO;
     private final UserDAO userDAO;
-    private ArrayList<Pantry> allLogs;
 
     public PantryManagerRepository(Application application) {
         PantryManagerDatabase db = PantryManagerDatabase.getDatabase(application);
         this.pantryDAO = db.pantryDAO();
         this.userDAO = db.UserDAO();
-        this.allLogs = (ArrayList<Pantry>) this.pantryDAO.getAllRecords();
-
     }
 
     public ArrayList<Pantry> getAllLogs() {
@@ -41,6 +35,23 @@ public class PantryManagerRepository {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
             Log.i(MainActivity.TAG, "Problem when getting all Pantries in the repository");
+        }
+        return null;
+    }
+
+    public User getUserByUsername(String username) {
+        Future<User> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<User>() {
+                    @Override
+                    public User call() throws Exception {
+                        return userDAO.getUserByUsername(username);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(MainActivity.TAG, "Problem when getting user by username");
         }
         return null;
     }

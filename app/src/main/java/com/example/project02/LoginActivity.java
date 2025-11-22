@@ -8,18 +8,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project02.Database.Entities.User;
+import com.example.project02.Database.PantryManagerRepository;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameField, passwordField;
     private TextView errorMessage;
-    private UserRepository userRepo;
+    private PantryManagerRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        userRepo = new UserRepository();
+        repository = new PantryManagerRepository(getApplication());
 
         usernameField = findViewById(R.id.usernameField);
         passwordField = findViewById(R.id.passwordField);
@@ -43,10 +46,10 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        User user = userRepo.authenticate(username, password);
-        if (user != null) {
+        User user = repository.getUserByUsername(username);
+        if (user != null && user.getPassword().equals(password)) {
             errorMessage.setVisibility(View.GONE);
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, LandingPage.class);
             intent.putExtra("username", user.getUsername());
             startActivity(intent);
             finish();
