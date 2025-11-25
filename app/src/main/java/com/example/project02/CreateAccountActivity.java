@@ -38,7 +38,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_account);
 
         PantryManagerDatabase db = PantryManagerDatabase.getInstance(getApplicationContext());
-        userDao = db.UserDAO(); // TODO: if it's getUserDAO(), rename accordingly
+        userDao = db.UserDAO();
 
         usernameLayout = findViewById(R.id.usernameLayout);
         passwordLayout = findViewById(R.id.passwordLayout);
@@ -82,10 +82,8 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         io.execute(() -> {
             try {
-                // Check uniqueness
-                // Ensure your DAO has something like:
-                // @Query("SELECT * FROM User WHERE username = :u LIMIT 1") User findByUsername(String u);
-                User existing = userDao.findByUsername(username); // TODO: match your DAO method
+
+                User existing = userDao.findByUsername(username);
                 if (existing != null) {
                     runOnUiThread(() -> {
                         createButton.setEnabled(true);
@@ -94,7 +92,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Insert new user
                 User user = new User(username, password);
                 user.setAdmin(isAdmin);
                 userDao.insert(user);
@@ -104,7 +101,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
                     Toast.makeText(this, "Account created! Please log in.", Toast.LENGTH_SHORT).show();
-                    finish(); // return to LoginActivity
+                    finish();
                 });
             } catch (Exception e) {
                 runOnUiThread(() -> {
