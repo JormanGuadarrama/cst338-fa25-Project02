@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {User.class, Pantry.class}, version = 3, exportSchema = false)
+@Database(entities = {User.class, Pantry.class}, version = 4, exportSchema = false)
 public abstract class PantryManagerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "PantryManagerDatabase";
