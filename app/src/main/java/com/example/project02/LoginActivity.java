@@ -1,13 +1,16 @@
-package com.example.project02;
+package com.example.project02.ui;
 
 import android.content.Intent;
+import com.example.project02.ui.CreateAccountActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.project02.LandingPage;
 
+import com.example.project02.R;
 import com.example.project02.Database.Entities.User;
 import com.example.project02.Database.PantryManagerRepository;
 

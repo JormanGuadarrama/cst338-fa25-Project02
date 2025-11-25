@@ -14,12 +14,12 @@ import java.util.concurrent.Future;
 
 public class PantryManagerRepository {
     private final PantryDAO pantryDAO;
-    private final UserDAO userDAO;
+    private final UserDAO UserDAO;
 
     public PantryManagerRepository(Application application) {
-        PantryManagerDatabase db = PantryManagerDatabase.getDatabase(application);
+        PantryManagerDatabase db = PantryManagerDatabase.getInstance(application);
         this.pantryDAO = db.pantryDAO();
-        this.userDAO = db.UserDAO();
+        this.UserDAO = db.UserDAO();
     }
 
     public ArrayList<Pantry> getAllLogs() {
@@ -44,7 +44,7 @@ public class PantryManagerRepository {
                 new Callable<User>() {
                     @Override
                     public User call() throws Exception {
-                        return userDAO.getUserByUsername(username);
+                        return UserDAO.getUserByUsername(username);
                     }
                 }
         );
@@ -62,9 +62,9 @@ public class PantryManagerRepository {
         });
     }
 
-    public void insertUser(User... user) {
+    public void insertUser(User user) {
         PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
-            userDAO.insert(user);
+            UserDAO.insert(user);
         });
     }
 }
