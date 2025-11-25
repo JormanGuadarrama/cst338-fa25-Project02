@@ -31,7 +31,7 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
 
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-    static PantryManagerDatabase getDatabase(final Context context) {
+    public static PantryManagerDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (PantryManagerDatabase.class) {
                 if (INSTANCE == null) {
@@ -62,5 +62,5 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
 
     public abstract PantryDAO pantryDAO();
 
-    public abstract UserDAO UserDAO();
+    public abstract UserDAO userDAO();
 }

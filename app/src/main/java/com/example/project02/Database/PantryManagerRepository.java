@@ -19,7 +19,7 @@ public class PantryManagerRepository {
     public PantryManagerRepository(Application application) {
         PantryManagerDatabase db = PantryManagerDatabase.getDatabase(application);
         this.pantryDAO = db.pantryDAO();
-        this.userDAO = db.UserDAO();
+        this.userDAO = db.userDAO();
     }
 
     public ArrayList<Pantry> getAllLogs() {

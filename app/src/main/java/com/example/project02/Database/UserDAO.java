@@ -24,6 +24,9 @@ public interface UserDAO {
     @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " WHERE username = :username")
     User getUserByUsername(String username);
 
+    @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " WHERE id = :id")
+    User getUserById(int id);
+
     @Query("DELETE FROM " + PantryManagerDatabase.USER_TABLE)
     void deleteAll();
 }
