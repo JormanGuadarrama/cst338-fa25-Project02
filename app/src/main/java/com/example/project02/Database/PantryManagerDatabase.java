@@ -10,6 +10,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.project02.Database.Entities.Food;
 import com.example.project02.Database.Entities.User;
 import com.example.project02.Database.Entities.Pantry;
 import com.example.project02.Database.typeConverters.LocalDateTypeConverter;
@@ -19,13 +20,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {User.class, Pantry.class}, version = 3, exportSchema = false)
+@Database(entities = {User.class, Pantry.class, Food.class}, version = 4, exportSchema = false)
 public abstract class PantryManagerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "PantryManagerDatabase";
 
     public static final String PANTRY_TABLE = "pantryTable";
     public static final String USER_TABLE = "userTable";
+    public static final String FOODS_TABLE = "foodsTable";
 
     private static volatile PantryManagerDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -63,4 +65,6 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
     public abstract PantryDAO pantryDAO();
 
     public abstract UserDAO userDAO();
+
+    public abstract FoodDAO foodDAO();
 }
