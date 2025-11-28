@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {User.class, Pantry.class, Food.class}, version = 4, exportSchema = false)
+@Database(entities = {User.class, Pantry.class, Food.class}, version = 7, exportSchema = false)
 public abstract class PantryManagerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "PantryManagerDatabase";
@@ -56,9 +56,40 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
             super.onCreate(db);
             Log.i(MainActivity.TAG, "DATABASE CREATED!");
             
+            long currentTimestamp = System.currentTimeMillis();
+
             // Insert default users synchronously to avoid race conditions on first launch
             db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('admin1', 'admin1', 1)");
+            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, dateCreated) VALUES (1, " + currentTimestamp + ")");
+
             db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('testuser1', 'testuser1', 0)");
+            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, dateCreated) VALUES (2, " + currentTimestamp + ")");
+
+            // Insert Initial food values
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Apple', 'Fruit', 'Red and juicy')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Banana', 'Fruit', 'Sweet yellow fruit')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Strawberries', 'Fruit', 'Bright red berries')");
+
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Broccoli', 'Vegetable', 'Green cruciferous vegetable')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Carrot', 'Vegetable', 'Orange root vegetable')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Spinach', 'Vegetable', 'Leafy green rich in iron')");
+
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Rice', 'Grain', 'Long-grain white rice')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Whole Wheat Bread', 'Grain', 'Whole-grain loaf')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Pasta', 'Grain', 'Dry spaghetti noodles')");
+
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Chicken Breast', 'Protein', 'Lean white meat protein')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Eggs', 'Protein', 'Large grade A eggs')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Black Beans', 'Protein', 'High-protein legumes')");
+
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Milk', 'Dairy', 'Whole milk 1 gallon')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Yogurt', 'Dairy', 'Low-fat vanilla yogurt')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Cheddar Cheese', 'Dairy', 'Sharp aged cheese')");
+
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Olive Oil', 'Fats/Oils', 'Extra virgin olive oil')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Avocado', 'Fats/Oils', 'Healthy fat-rich fruit')");
+
+
         }
     };
 

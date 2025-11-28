@@ -4,6 +4,8 @@ package com.example.project02.Database.Entities;
 import android.os.Build;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.example.project02.Database.PantryManagerDatabase;
@@ -12,7 +14,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity(tableName = PantryManagerDatabase.PANTRY_TABLE)
+@Entity(tableName = PantryManagerDatabase.PANTRY_TABLE,
+        foreignKeys = @ForeignKey(
+                entity = User.class,
+                parentColumns = "id",
+                childColumns = "userId",
+                onDelete = ForeignKey.CASCADE
+        ),
+        indices = {@Index(value = "userId", unique = true)}
+)
 public class Pantry {
     @PrimaryKey(autoGenerate = true)
     private int id;

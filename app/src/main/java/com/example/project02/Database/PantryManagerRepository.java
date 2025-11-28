@@ -25,6 +25,40 @@ public class PantryManagerRepository {
         this.foodDAO = db.foodDAO();
     }
 
+    public Long insertUserWithPantry(User user) {
+        Future<Long> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<Long>() {
+                    @Override
+                    public Long call() throws Exception {
+                        return userDAO.insertUserWithPantry(user);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(MainActivity.TAG, "Problem when inserting user with pantry");
+        }
+        return null;
+    }
+
+    public Pantry getPantryByUserId(int userId) {
+        Future<Pantry> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<Pantry>() {
+                    @Override
+                    public Pantry call() throws Exception {
+                        return pantryDAO.getPantryByUserId(userId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(MainActivity.TAG, "Problem when getting pantry by user id");
+        }
+        return null;
+    }
+
     public ArrayList<Pantry> getAllLogs() {
         Future<ArrayList<Pantry>> future = PantryManagerDatabase.databaseWriteExecutor.submit(
                 new Callable<ArrayList<Pantry>>() {
@@ -99,9 +133,11 @@ public class PantryManagerRepository {
         });
     }
 
-    public void insertUser(User... user) {
+    public void insertUser(User... users) {
         PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
-            userDAO.insert(user);
+            for (User user : users) {
+                userDAO.insertUserWithPantry(user);
+            }
         });
     }
 
