@@ -3,11 +3,13 @@ package com.example.project02.Database;
 import android.app.Application;
 import android.util.Log;
 
-import com.example.project02.Database.Entities.Pantry;
+import com.example.project02.Database.Entities.Food;
+import com.example.project02.Database.Entities.PantryItem;
 import com.example.project02.Database.Entities.User;
 import com.example.project02.MainActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -15,19 +17,55 @@ import java.util.concurrent.Future;
 public class PantryManagerRepository {
     private final PantryDAO pantryDAO;
     private final UserDAO userDAO;
+    private final FoodDAO foodDAO;
 
     public PantryManagerRepository(Application application) {
         PantryManagerDatabase db = PantryManagerDatabase.getDatabase(application);
         this.pantryDAO = db.pantryDAO();
         this.userDAO = db.userDAO();
+        this.foodDAO = db.foodDAO();
     }
 
-    public ArrayList<Pantry> getAllLogs() {
-        Future<ArrayList<Pantry>> future = PantryManagerDatabase.databaseWriteExecutor.submit(
-                new Callable<ArrayList<Pantry>>() {
+    public Long insertUser(User user) {
+        Future<Long> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<Long>() {
                     @Override
-                    public ArrayList<Pantry> call() throws Exception {
-                        return (ArrayList<Pantry>) pantryDAO.getAllRecords();
+                    public Long call() throws Exception {
+                        return userDAO.insert(user);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(MainActivity.TAG, "Problem when inserting user");
+        }
+        return null;
+    }
+
+    public List<PantryItem> getPantryByUserId(int userId) {
+        Future<List<PantryItem>> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<List<PantryItem>>() {
+                    @Override
+                    public List<PantryItem> call() throws Exception {
+                        return pantryDAO.getPantryByUserId(userId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(MainActivity.TAG, "Problem when getting pantry by user id");
+        }
+        return null;
+    }
+
+    public ArrayList<PantryItem> getAllLogs() {
+        Future<ArrayList<PantryItem>> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<PantryItem>>() {
+                    @Override
+                    public ArrayList<PantryItem> call() throws Exception {
+                        return (ArrayList<PantryItem>) pantryDAO.getAllRecords();
                     }
                 }
         );
@@ -35,6 +73,23 @@ public class PantryManagerRepository {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
             Log.i(MainActivity.TAG, "Problem when getting all Pantries in the repository");
+        }
+        return null;
+    }
+
+    public ArrayList<Food> getAllFoods() {
+        Future<ArrayList<Food>> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<Food>>() {
+                    @Override
+                    public ArrayList<Food> call() throws Exception {
+                        return (ArrayList<Food>) foodDAO.getAllFoods();
+                    }
+                }
+        );
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(MainActivity.TAG, "Problem when getting all Foods in the repository");
         }
         return null;
     }
@@ -56,15 +111,48 @@ public class PantryManagerRepository {
         return null;
     }
 
-    public void insertPantry(Pantry pantry) {
+    public Food getFoodById(int id) {
+        Future<Food> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<Food>() {
+                    @Override
+                    public Food call() throws Exception {
+                        return foodDAO.getFoodById(id);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(MainActivity.TAG, "Problem when getting food by id");
+        }
+        return null;
+    }
+
+    public void addItemToPantry(int userId, int foodId) {
         PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
-            pantryDAO.insert(pantry);
+            PantryItem existingItem = pantryDAO.getPantryItem(userId, foodId);
+            if (existingItem != null) {
+                existingItem.setQuantity(existingItem.getQuantity() + 1);
+                pantryDAO.update(existingItem);
+            } else {
+                PantryItem newItem = new PantryItem(userId, foodId);
+                newItem.setQuantity(1);
+                pantryDAO.insert(newItem);
+            }
         });
     }
 
-    public void insertUser(User user) {
+    public void insertUserVoid(User... users) {
         PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
-            userDAO.insert(user);
+            for (User user : users) {
+                userDAO.insert(user);
+            }
+        });
+    }
+
+    public void insertFood(Food... food) {
+        PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
+            foodDAO.insert(food);
         });
     }
 }

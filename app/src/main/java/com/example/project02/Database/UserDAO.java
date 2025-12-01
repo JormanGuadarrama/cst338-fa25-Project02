@@ -12,13 +12,8 @@ import java.util.List;
 
 @Dao
 public interface UserDAO {
-
-
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    void insert(User user);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void upsert(User... users);
+    long insert(User user);
 
     @Delete
     void delete(User user);
