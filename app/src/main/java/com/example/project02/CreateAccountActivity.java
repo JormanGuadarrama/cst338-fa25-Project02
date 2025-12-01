@@ -83,7 +83,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         io.execute(() -> {
             try {
 
-                User existing = userDao.findByUsername(username);
+                User existing = userDao.getUserByUsername(username);
                 if (existing != null) {
                     runOnUiThread(() -> {
                         createButton.setEnabled(true);

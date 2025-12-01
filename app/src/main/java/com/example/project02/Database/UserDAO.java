@@ -18,10 +18,6 @@ public interface UserDAO {
     @Delete
     void delete(User user);
 
-
-    @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " WHERE username = :u LIMIT 1")
-    User findByUsername(String u);
-
     @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " ORDER BY username")
     List<User> getAllUsers();
 
