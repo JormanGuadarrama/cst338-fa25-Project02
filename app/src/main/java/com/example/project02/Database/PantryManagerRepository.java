@@ -17,7 +17,7 @@ public class PantryManagerRepository {
     private final UserDAO userDAO;
 
     public PantryManagerRepository(Application application) {
-        PantryManagerDatabase db = PantryManagerDatabase.getInstance(application);
+        PantryManagerDatabase db = PantryManagerDatabase.getDatabase(application);
         this.pantryDAO = db.pantryDAO();
         this.userDAO = db.userDAO();
     }
@@ -62,7 +62,7 @@ public class PantryManagerRepository {
         });
     }
 
-    public void insertUser(User... user) {
+    public void insertUser(User user) {
         PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
             userDAO.insert(user);
         });

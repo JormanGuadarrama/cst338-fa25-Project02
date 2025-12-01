@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import com.example.project02.LoginActivity;
+import com.example.project02.ui.LoginActivity;
 import com.example.project02.R;
 
 public class AccountFragment extends Fragment {

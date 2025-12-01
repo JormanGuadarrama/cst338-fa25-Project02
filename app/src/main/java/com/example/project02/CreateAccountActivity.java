@@ -37,8 +37,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-        PantryManagerDatabase db = PantryManagerDatabase.getInstance(getApplicationContext());
-        userDao = db.UserDAO();
+        PantryManagerDatabase db = PantryManagerDatabase.getDatabase(getApplicationContext());
+        userDao = db.userDAO();
 
         usernameLayout = findViewById(R.id.usernameLayout);
         passwordLayout = findViewById(R.id.passwordLayout);
