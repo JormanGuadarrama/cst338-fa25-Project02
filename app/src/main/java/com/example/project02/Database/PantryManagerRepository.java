@@ -4,7 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.example.project02.Database.Entities.Food;
-import com.example.project02.Database.Entities.Pantry;
+import com.example.project02.Database.Entities.PantryItem;
 import com.example.project02.Database.Entities.User;
 import com.example.project02.MainActivity;
 
@@ -43,11 +43,11 @@ public class PantryManagerRepository {
         return null;
     }
 
-    public List<Pantry> getPantryByUserId(int userId) {
-        Future<List<Pantry>> future = PantryManagerDatabase.databaseWriteExecutor.submit(
-                new Callable<List<Pantry>>() {
+    public List<PantryItem> getPantryByUserId(int userId) {
+        Future<List<PantryItem>> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<List<PantryItem>>() {
                     @Override
-                    public List<Pantry> call() throws Exception {
+                    public List<PantryItem> call() throws Exception {
                         return pantryDAO.getPantryByUserId(userId);
                     }
                 }
@@ -60,12 +60,12 @@ public class PantryManagerRepository {
         return null;
     }
 
-    public ArrayList<Pantry> getAllLogs() {
-        Future<ArrayList<Pantry>> future = PantryManagerDatabase.databaseWriteExecutor.submit(
-                new Callable<ArrayList<Pantry>>() {
+    public ArrayList<PantryItem> getAllLogs() {
+        Future<ArrayList<PantryItem>> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<PantryItem>>() {
                     @Override
-                    public ArrayList<Pantry> call() throws Exception {
-                        return (ArrayList<Pantry>) pantryDAO.getAllRecords();
+                    public ArrayList<PantryItem> call() throws Exception {
+                        return (ArrayList<PantryItem>) pantryDAO.getAllRecords();
                     }
                 }
         );
@@ -128,9 +128,9 @@ public class PantryManagerRepository {
         return null;
     }
 
-    public void insertPantry(Pantry pantry) {
+    public void insertPantry(PantryItem pantryItem) {
         PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
-            pantryDAO.insert(pantry);
+            pantryDAO.insert(pantryItem);
         });
     }
 

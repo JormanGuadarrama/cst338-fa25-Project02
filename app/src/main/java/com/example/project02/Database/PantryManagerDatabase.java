@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.project02.Database.Entities.Food;
 import com.example.project02.Database.Entities.User;
-import com.example.project02.Database.Entities.Pantry;
+import com.example.project02.Database.Entities.PantryItem;
 import com.example.project02.Database.typeConverters.LocalDateTypeConverter;
 import com.example.project02.MainActivity;
 
@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {User.class, Pantry.class, Food.class}, version = 8, exportSchema = false)
+@Database(entities = {User.class, PantryItem.class, Food.class}, version = 8, exportSchema = false)
 public abstract class PantryManagerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "PantryManagerDatabase";

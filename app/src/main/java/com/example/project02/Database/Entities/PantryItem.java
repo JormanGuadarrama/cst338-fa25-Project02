@@ -26,14 +26,14 @@ import java.util.Objects;
                 @Index(value = "foodId")
         }
 )
-public class Pantry {
+public class PantryItem {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int userId;
     private int foodId;
     private LocalDateTime dateCreated;
 
-    public Pantry(int userId, int foodId) {
+    public PantryItem(int userId, int foodId) {
         this.userId = userId;
         this.foodId = foodId;
         this.dateCreated = LocalDateTime.now();
@@ -75,8 +75,8 @@ public class Pantry {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pantry pantry = (Pantry) o;
-        return id == pantry.id && userId == pantry.userId && foodId == pantry.foodId && Objects.equals(dateCreated, pantry.dateCreated);
+        PantryItem pantryItem = (PantryItem) o;
+        return id == pantryItem.id && userId == pantryItem.userId && foodId == pantryItem.foodId && Objects.equals(dateCreated, pantryItem.dateCreated);
     }
 
     @Override

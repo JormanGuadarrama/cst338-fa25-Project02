@@ -5,18 +5,18 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.project02.Database.Entities.Pantry;
+import com.example.project02.Database.Entities.PantryItem;
 
 import java.util.List;
 
 @Dao
 public interface PantryDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Pantry pantry);
+    void insert(PantryItem pantryItem);
 
     @Query("SELECT * FROM " + PantryManagerDatabase.PANTRY_TABLE)
-    List<Pantry> getAllRecords();
+    List<PantryItem> getAllRecords();
 
     @Query("SELECT * FROM " + PantryManagerDatabase.PANTRY_TABLE + " WHERE userId = :userId")
-    List<Pantry> getPantryByUserId(int userId);
+    List<PantryItem> getPantryByUserId(int userId);
 }
