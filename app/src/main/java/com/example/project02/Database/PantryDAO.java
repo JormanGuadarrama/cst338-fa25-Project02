@@ -18,5 +18,5 @@ public interface PantryDAO {
     List<Pantry> getAllRecords();
 
     @Query("SELECT * FROM " + PantryManagerDatabase.PANTRY_TABLE + " WHERE userId = :userId")
-    Pantry getPantryByUserId(int userId);
+    List<Pantry> getPantryByUserId(int userId);
 }

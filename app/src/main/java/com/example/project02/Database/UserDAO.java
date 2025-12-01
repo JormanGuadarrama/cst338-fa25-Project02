@@ -5,9 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Transaction;
 
-import com.example.project02.Database.Entities.Pantry;
 import com.example.project02.Database.Entities.User;
 
 import java.util.List;
@@ -20,18 +18,6 @@ public interface UserDAO {
     @Delete
     void delete(User user);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertPantry(Pantry pantry);
-
-
-    @Transaction
-    default long insertUserWithPantry(User user) {
-        long id = insert(user);
-        user.setId((int) id);
-        Pantry pantry = new Pantry((int) id);
-        insertPantry(pantry);
-        return id;
-    }
     @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " ORDER BY username")
     List<User> getAllUsers();
 

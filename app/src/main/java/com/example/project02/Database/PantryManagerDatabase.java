@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {User.class, Pantry.class, Food.class}, version = 7, exportSchema = false)
+@Database(entities = {User.class, Pantry.class, Food.class}, version = 8, exportSchema = false)
 public abstract class PantryManagerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "PantryManagerDatabase";
@@ -58,14 +58,7 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
             
             long currentTimestamp = System.currentTimeMillis();
 
-            // Insert default users synchronously to avoid race conditions on first launch
-            db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('admin1', 'admin1', 1)");
-            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, dateCreated) VALUES (1, " + currentTimestamp + ")");
-
-            db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('testuser1', 'testuser1', 0)");
-            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, dateCreated) VALUES (2, " + currentTimestamp + ")");
-
-            // Insert Initial food values
+            // 1. Insert Foods
             db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Apple', 'Fruit', 'Red and juicy')");
             db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Banana', 'Fruit', 'Sweet yellow fruit')");
             db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Strawberries', 'Fruit', 'Bright red berries')");
@@ -89,7 +82,35 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
             db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Olive Oil', 'Fats/Oils', 'Extra virgin olive oil')");
             db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Avocado', 'Fats/Oils', 'Healthy fat-rich fruit')");
 
+            // Insert Default Users
+            db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('admin1', 'admin1', 1)");
+            db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('testuser1', 'testuser1', 0)");
 
+            
+            // Give admin1 some items (Apple, Milk, Rice)
+            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, dateCreated) " +
+                    "VALUES (1, 1, " + currentTimestamp + ")");
+            
+             db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, dateCreated) SELECT " +
+                    "(SELECT id FROM " + USER_TABLE + " WHERE username = 'admin1'), " +
+                    "(SELECT id FROM " + FOODS_TABLE + " WHERE name = 'Milk'), " +
+                    currentTimestamp);
+             
+             db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, dateCreated) SELECT " +
+                    "(SELECT id FROM " + USER_TABLE + " WHERE username = 'admin1'), " +
+                    "(SELECT id FROM " + FOODS_TABLE + " WHERE name = 'Rice'), " +
+                    currentTimestamp);
+
+            // Give testuser1 some items (Banana, Chicken Breast)
+            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, dateCreated) SELECT " +
+                    "(SELECT id FROM " + USER_TABLE + " WHERE username = 'testuser1'), " +
+                    "(SELECT id FROM " + FOODS_TABLE + " WHERE name = 'Banana'), " +
+                    currentTimestamp);
+
+            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, dateCreated) SELECT " +
+                    "(SELECT id FROM " + USER_TABLE + " WHERE username = 'testuser1'), " +
+                    "(SELECT id FROM " + FOODS_TABLE + " WHERE name = 'Chicken Breast'), " +
+                    currentTimestamp);
         }
     };
 
