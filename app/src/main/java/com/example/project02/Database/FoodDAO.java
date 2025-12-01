@@ -23,4 +23,10 @@ public interface FoodDAO {
 
     @Query("SELECT * FROM " + PantryManagerDatabase.FOODS_TABLE + " WHERE id = :id")
     Food getFoodById(int id);
+
+    @Query("SELECT * FROM " + PantryManagerDatabase.FOODS_TABLE + " WHERE family = :family")
+    Food getFoodByFamily(String family);
+
+    @Query("SELECT * FROM " + PantryManagerDatabase.FOODS_TABLE + " WHERE name LIKE '%' || :text || '%'")
+    List<Food> searchSuggest(String text);
 }
