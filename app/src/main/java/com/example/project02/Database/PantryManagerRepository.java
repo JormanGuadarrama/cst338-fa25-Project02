@@ -128,9 +128,17 @@ public class PantryManagerRepository {
         return null;
     }
 
-    public void insertPantry(PantryItem pantryItem) {
+    public void addItemToPantry(int userId, int foodId) {
         PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
-            pantryDAO.insert(pantryItem);
+            PantryItem existingItem = pantryDAO.getPantryItem(userId, foodId);
+            if (existingItem != null) {
+                existingItem.setQuantity(existingItem.getQuantity() + 1);
+                pantryDAO.update(existingItem);
+            } else {
+                PantryItem newItem = new PantryItem(userId, foodId);
+                newItem.setQuantity(1);
+                pantryDAO.insert(newItem);
+            }
         });
     }
 

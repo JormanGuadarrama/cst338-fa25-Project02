@@ -31,12 +31,14 @@ public class PantryItem {
     private int id;
     private int userId;
     private int foodId;
+    private int quantity;
     private LocalDateTime dateCreated;
 
     public PantryItem(int userId, int foodId) {
         this.userId = userId;
         this.foodId = foodId;
         this.dateCreated = LocalDateTime.now();
+        this.quantity = 1;
     }
 
     public int getId() {
@@ -63,6 +65,14 @@ public class PantryItem {
         this.foodId = foodId;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public LocalDateTime getDateCreated() {
         return dateCreated;
     }
@@ -75,12 +85,12 @@ public class PantryItem {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PantryItem pantryItem = (PantryItem) o;
-        return id == pantryItem.id && userId == pantryItem.userId && foodId == pantryItem.foodId && Objects.equals(dateCreated, pantryItem.dateCreated);
+        PantryItem that = (PantryItem) o;
+        return id == that.id && userId == that.userId && foodId == that.foodId && quantity == that.quantity && Objects.equals(dateCreated, that.dateCreated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, foodId, dateCreated);
+        return Objects.hash(id, userId, foodId, quantity, dateCreated);
     }
 }

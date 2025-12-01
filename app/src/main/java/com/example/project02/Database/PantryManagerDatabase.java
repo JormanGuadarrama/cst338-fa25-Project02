@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {User.class, PantryItem.class, Food.class}, version = 8, exportSchema = false)
+@Database(entities = {User.class, PantryItem.class, Food.class}, version = 9, exportSchema = false)
 public abstract class PantryManagerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "PantryManagerDatabase";
@@ -88,28 +88,32 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
 
             
             // Give admin1 some items (Apple, Milk, Rice)
-            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, dateCreated) " +
-                    "VALUES (1, 1, " + currentTimestamp + ")");
+            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, quantity, dateCreated) " +
+                    "VALUES (1, 1, 1, " + currentTimestamp + ")");
             
-             db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, dateCreated) SELECT " +
+             db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, quantity, dateCreated) SELECT " +
                     "(SELECT id FROM " + USER_TABLE + " WHERE username = 'admin1'), " +
                     "(SELECT id FROM " + FOODS_TABLE + " WHERE name = 'Milk'), " +
+                    "1, " +
                     currentTimestamp);
              
-             db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, dateCreated) SELECT " +
+             db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, quantity, dateCreated) SELECT " +
                     "(SELECT id FROM " + USER_TABLE + " WHERE username = 'admin1'), " +
                     "(SELECT id FROM " + FOODS_TABLE + " WHERE name = 'Rice'), " +
+                    "1, " +
                     currentTimestamp);
 
             // Give testuser1 some items (Banana, Chicken Breast)
-            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, dateCreated) SELECT " +
+            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, quantity, dateCreated) SELECT " +
                     "(SELECT id FROM " + USER_TABLE + " WHERE username = 'testuser1'), " +
                     "(SELECT id FROM " + FOODS_TABLE + " WHERE name = 'Banana'), " +
+                    "1, " +
                     currentTimestamp);
 
-            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, dateCreated) SELECT " +
+            db.execSQL("INSERT INTO " + PANTRY_TABLE + " (userId, foodId, quantity, dateCreated) SELECT " +
                     "(SELECT id FROM " + USER_TABLE + " WHERE username = 'testuser1'), " +
                     "(SELECT id FROM " + FOODS_TABLE + " WHERE name = 'Chicken Breast'), " +
+                    "1, " +
                     currentTimestamp);
         }
     };
