@@ -17,7 +17,7 @@ public class PantryManagerRepository {
     private final UserDAO userDAO;
 
     public PantryManagerRepository(Application application) {
-        PantryManagerDatabase db = PantryManagerDatabase.getDatabase(application);
+        PantryManagerDatabase db = PantryManagerDatabase.getInstance(application);
         this.pantryDAO = db.pantryDAO();
         this.userDAO = db.userDAO();
     }

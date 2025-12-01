@@ -12,16 +12,25 @@ import java.util.List;
 
 @Dao
 public interface UserDAO {
+
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    void insert(User user);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(User... user);
+    void upsert(User... users);
 
     @Delete
     void delete(User user);
 
+
+    @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " WHERE username = :u LIMIT 1")
+    User findByUsername(String u);
+
     @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " ORDER BY username")
     List<User> getAllUsers();
 
-    @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " WHERE username = :username")
+    @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " WHERE username = :username LIMIT 1")
     User getUserByUsername(String username);
 
     @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " WHERE id = :id")

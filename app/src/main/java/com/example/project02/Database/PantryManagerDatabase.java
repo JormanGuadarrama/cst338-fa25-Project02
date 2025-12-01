@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {User.class, Pantry.class}, version = 3, exportSchema = false)
+@Database(entities = {User.class, Pantry.class}, version = 4, exportSchema = false)
 public abstract class PantryManagerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "PantryManagerDatabase";
@@ -36,12 +36,12 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
             synchronized (PantryManagerDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(
-                        context.getApplicationContext(),
-                        PantryManagerDatabase.class,
-                        DATABASE_NAME)
-                        .fallbackToDestructiveMigration()
-                        .addCallback(addDefaultValues)
-                        .build();
+                                    context.getApplicationContext(),
+                                    PantryManagerDatabase.class,
+                                    DATABASE_NAME)
+                            .fallbackToDestructiveMigration()
+                            .addCallback(addDefaultValues)
+                            .build();
                 }
             }
         }
@@ -53,8 +53,6 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             Log.i(MainActivity.TAG, "DATABASE CREATED!");
-            
-            // Insert default users synchronously to avoid race conditions on first launch
             db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('admin1', 'admin1', 1)");
             db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('testuser1', 'testuser1', 0)");
         }

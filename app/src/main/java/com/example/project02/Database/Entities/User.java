@@ -1,7 +1,10 @@
 package com.example.project02.Database.Entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.ColumnInfo;
+
 
 import com.example.project02.Database.PantryManagerDatabase;
 
@@ -11,14 +14,18 @@ import java.util.Objects;
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
+    @NonNull
+    @ColumnInfo(name = "username")
     private String username;
+    @ColumnInfo(name = "password")
     private String password;
+    @ColumnInfo(name = "isAdmin")
     private boolean isAdmin;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.isAdmin = false;
+        this.isAdmin = isAdmin;
     }
 
     @Override
