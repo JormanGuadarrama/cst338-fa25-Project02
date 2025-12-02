@@ -94,7 +94,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 User user = new User(username, password);
                 user.setAdmin(isAdmin);
-                userDao.insert(user);
 
                 PantryManagerRepository repo = new PantryManagerRepository(getApplication());
                 repo.insertUser(user);
