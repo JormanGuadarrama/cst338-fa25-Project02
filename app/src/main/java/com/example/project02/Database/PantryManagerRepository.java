@@ -150,9 +150,21 @@ public class PantryManagerRepository {
         });
     }
 
+    public void deleteUser(User user) {
+        PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
+            userDAO.delete(user);
+        });
+    }
+
     public void insertFood(Food... food) {
         PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
             foodDAO.insert(food);
+        });
+    }
+
+    public void deleteUserLogs(User user) {
+        PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
+            pantryDAO.deleteLogs(user.getId());
         });
     }
 }

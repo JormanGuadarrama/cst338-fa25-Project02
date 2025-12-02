@@ -26,4 +26,7 @@ public interface PantryDAO {
 
     @Query("SELECT * FROM " + PantryManagerDatabase.PANTRY_TABLE + " WHERE userId = :userId AND foodId = :foodId")
     PantryItem getPantryItem(int userId, int foodId);
+
+    @Query("DELETE FROM " + PantryManagerDatabase.PANTRY_TABLE + " WHERE userId = :userId")
+    void deleteLogs(int userId);
 }
