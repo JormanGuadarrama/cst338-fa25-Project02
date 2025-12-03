@@ -19,7 +19,7 @@ public interface FoodDAO {
     void delete(Food food);
 
     @Query("SELECT * FROM " + PantryManagerDatabase.FOODS_TABLE)
-    List<Food> getAllFoods();
+    List<Food> getAllFood();
 
     @Query("SELECT * FROM " + PantryManagerDatabase.FOODS_TABLE + " WHERE id = :id")
     Food getFoodById(int id);

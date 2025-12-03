@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
 @Database(entities = {User.class, PantryItem.class, Food.class}, version = 9, exportSchema = false)
-public abstract class PantryManagerDatabase extends RoomDatabase {
+public abstract class  PantryManagerDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "PantryManagerDatabase";
 
@@ -32,7 +32,7 @@ public abstract class PantryManagerDatabase extends RoomDatabase {
     private static volatile PantryManagerDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
 
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     public static PantryManagerDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (PantryManagerDatabase.class) {
