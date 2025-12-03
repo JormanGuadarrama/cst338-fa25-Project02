@@ -82,7 +82,7 @@ public class PantryManagerRepository {
                 new Callable<ArrayList<Food>>() {
                     @Override
                     public ArrayList<Food> call() throws Exception {
-                        return (ArrayList<Food>) foodDAO.getAllFoods();
+                        return (ArrayList<Food>) foodDAO.getAllFood();
                     }
                 }
         );
