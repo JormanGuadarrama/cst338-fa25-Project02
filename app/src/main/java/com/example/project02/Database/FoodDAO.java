@@ -21,6 +21,9 @@ public interface FoodDAO {
     @Query("SELECT * FROM " + PantryManagerDatabase.FOODS_TABLE)
     List<Food> getAllFood();
 
+    @Query("SELECT DISTINCT family FROM " + PantryManagerDatabase.FOODS_TABLE + " ORDER BY family ASC")
+    List<String> getDistinctFamilies();
+
     @Query("SELECT * FROM " + PantryManagerDatabase.FOODS_TABLE + " WHERE id = :id")
     Food getFoodById(int id);
 

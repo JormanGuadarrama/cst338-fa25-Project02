@@ -13,10 +13,16 @@ import java.util.List;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodViewHolder> {
 
-    private List<Food> mFoodList;
+    public interface OnItemAddListener {
+        void onItemAdd(Food food);
+    }
 
-    public FoodListAdapter(List<Food> foodList) {
+    private List<Food> mFoodList;
+    private OnItemAddListener mListener;
+
+    public FoodListAdapter(List<Food> foodList, OnItemAddListener listener) {
         mFoodList = foodList;
+        mListener = listener;
     }
 
     @NonNull
@@ -30,9 +36,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
         Food currentFood = mFoodList.get(position);
-        holder.nameTextView.setText(currentFood.getName());
-        holder.familyTextView.setText(currentFood.getFamily());
-        holder.descriptionTextView.setText(currentFood.getDescription());
+        holder.bind(currentFood, mListener);
     }
 
     @Override
@@ -60,6 +64,13 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
             familyTextView = itemView.findViewById(R.id.food_family_textview);
             descriptionTextView = itemView.findViewById(R.id.food_description_textview);
             addButton = itemView.findViewById(R.id.add_food_button);
+        }
+
+        public void bind(final Food food, final OnItemAddListener listener) {
+            nameTextView.setText(food.getName());
+            familyTextView.setText(food.getFamily());
+            descriptionTextView.setText(food.getDescription());
+            addButton.setOnClickListener(v -> listener.onItemAdd(food));
         }
     }
 }
