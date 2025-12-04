@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project02.Database.Entities.Food;
@@ -25,11 +26,27 @@ public class AddFoodActivity extends AppCompatActivity {
         binding = ActivityAddFoodBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Set the toolbar as the action bar
+        setSupportActionBar(binding.addFoodToolbar);
+
+        // Enable the back button in the action bar
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         db = PantryManagerDatabase.getDatabase(this);
 
         setupFamilyDropdown();
 
         binding.saveFoodButton.setOnClickListener(v -> saveFoodItem());
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        // Handle the back button click
+        finish();
+        return true;
     }
 
     private void setupFamilyDropdown() {
