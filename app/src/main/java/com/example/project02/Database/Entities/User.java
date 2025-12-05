@@ -40,6 +40,12 @@ public class User {
         return Objects.hash(id, username, password, isAdmin);
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return username;
+    }
+
     public int getId() {
         return id;
     }

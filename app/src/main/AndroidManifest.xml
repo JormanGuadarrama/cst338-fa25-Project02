@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project02">
         <activity
+            android:name=".adminControlsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.CreateAccountActivity"
             android:exported="false" />
         <activity

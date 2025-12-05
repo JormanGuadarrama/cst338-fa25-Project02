@@ -37,6 +37,11 @@ public class LandingPage extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        // Set up Admin Controls button click listener
+        binding.adminControlButton.setOnClickListener(v -> {
+            startActivity(adminControlsActivity.getIntent(LandingPage.this));
+        });
+
         UserDAO userDAO = PantryManagerDatabase.getDatabase(this).userDAO();
 
         // New thread for db access

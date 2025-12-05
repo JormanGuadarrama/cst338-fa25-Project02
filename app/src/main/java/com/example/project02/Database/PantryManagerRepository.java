@@ -94,6 +94,23 @@ public class PantryManagerRepository {
         return null;
     }
 
+    public ArrayList<User> getAllUsers() {
+        Future<ArrayList<User>> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<User>>() {
+                    @Override
+                    public ArrayList<User> call() throws Exception {
+                        return (ArrayList<User>) userDAO.getAllUsers();
+                    }
+                }
+        );
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(MainActivity.TAG, "Problem when getting all Users in the repository");
+        }
+        return null;
+    }
+
     public User getUserByUsername(String username) {
         Future<User> future = PantryManagerDatabase.databaseWriteExecutor.submit(
                 new Callable<User>() {
@@ -159,6 +176,12 @@ public class PantryManagerRepository {
     public void insertFood(Food... food) {
         PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
             foodDAO.insert(food);
+        });
+    }
+
+    public void deleteFood(Food food) {
+        PantryManagerDatabase.databaseWriteExecutor.execute(() -> {
+            foodDAO.delete(food);
         });
     }
 

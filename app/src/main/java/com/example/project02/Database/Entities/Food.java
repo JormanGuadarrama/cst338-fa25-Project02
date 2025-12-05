@@ -33,6 +33,11 @@ public class Food {
         return Objects.hash(id, name, family, description);
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public int getId() {
         return id;
     }

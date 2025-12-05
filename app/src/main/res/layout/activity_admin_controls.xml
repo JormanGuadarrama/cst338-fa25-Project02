@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".adminControlsActivity">
+
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin Controls"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/button_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_back" />
+
+    <TextView
+        android:id="@+id/label_users"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Manage Users"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/button_back"
+        app:layout_constraintTop_toBottomOf="@+id/button_back" />
+
+    <Spinner
+        android:id="@+id/spinner_users"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/label_users"
+        app:layout_constraintTop_toBottomOf="@+id/label_users" />
+
+    <Button
+        android:id="@+id/button_delete_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="96dp"
+        android:text="Delete Selected User"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_users"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_users" />
+
+    <Spinner
+        android:id="@+id/spinner_food"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/label_food"
+        app:layout_constraintTop_toBottomOf="@+id/label_food" />
+
+    <TextView
+        android:id="@+id/label_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Manage Food Items"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/label_users"
+        app:layout_constraintTop_toBottomOf="@+id/button_delete_user" />
+
+    <Button
+        android:id="@+id/button_delete_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="92dp"
+        android:text="Delete Selected Food"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_food"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_food" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
