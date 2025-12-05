@@ -111,6 +111,24 @@ public class PantryManagerRepository {
         return null;
     }
 
+    public ArrayList<User> getAllOtherUsers(int id) {
+        Future<ArrayList<User>> future = PantryManagerDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<User>>() {
+                    @Override
+                    public ArrayList<User> call() throws Exception {
+                        ArrayList<User> allOtherUsers = (ArrayList<User>) userDAO.getAllOtherUsers(id);
+                        return allOtherUsers;
+                    }
+                }
+        );
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(MainActivity.TAG, "Problem when getting all other Users in the repository");
+        }
+        return null;
+    }
+
     public User getUserByUsername(String username) {
         Future<User> future = PantryManagerDatabase.databaseWriteExecutor.submit(
                 new Callable<User>() {

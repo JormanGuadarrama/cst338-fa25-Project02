@@ -37,11 +37,6 @@ public class LandingPage extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        // Set up Admin Controls button click listener
-        binding.adminControlButton.setOnClickListener(v -> {
-            startActivity(adminControlsActivity.getIntent(LandingPage.this));
-        });
-
         UserDAO userDAO = PantryManagerDatabase.getDatabase(this).userDAO();
 
         // New thread for db access
@@ -55,6 +50,9 @@ public class LandingPage extends AppCompatActivity {
                     binding.homeUsernameText.setText("User: " + user.getUsername());
                     if (user.isAdmin()) {
                         binding.adminControlButton.setVisibility(View.VISIBLE);
+                        binding.adminControlButton.setOnClickListener(v -> {
+                            startActivity(adminControlsActivity.getIntent(LandingPage.this, user.getId()));
+                        });
                     }
                 } else {
                     binding.homeUsernameText.setText("User: Unknown");

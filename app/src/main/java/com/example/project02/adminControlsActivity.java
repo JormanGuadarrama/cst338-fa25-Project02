@@ -25,6 +25,7 @@ public class adminControlsActivity extends AppCompatActivity {
 
     private User selectedUser;
     private Food selectedFood;
+    private int currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,8 @@ public class adminControlsActivity extends AppCompatActivity {
         binding = ActivityAdminControlsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         repository = new PantryManagerRepository(getApplication());
+
+        currentUserId = getIntent().getIntExtra("USER_ID", -1);
 
         binding.buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +76,7 @@ public class adminControlsActivity extends AppCompatActivity {
     }
 
     private void setUserDropdown() {
-        List<User> users = repository.getAllUsers();
+        List<User> users = repository.getAllOtherUsers(currentUserId);
         if (users == null) users = new ArrayList<>();
         ArrayAdapter<User> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, users);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -112,7 +115,9 @@ public class adminControlsActivity extends AppCompatActivity {
         });
     }
 
-    public static Intent getIntent(Context context) {
-        return new Intent(context, adminControlsActivity.class);
+    public static Intent getIntent(Context context, int userId) {
+        Intent intent = new Intent(context, adminControlsActivity.class);
+        intent.putExtra("USER_ID", userId);
+        return intent;
     }
 }

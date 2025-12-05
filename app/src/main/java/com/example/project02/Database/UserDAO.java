@@ -29,4 +29,7 @@ public interface UserDAO {
 
     @Query("DELETE FROM " + PantryManagerDatabase.USER_TABLE)
     void deleteAll();
+
+    @Query("SELECT * FROM " + PantryManagerDatabase.USER_TABLE + " WHERE id != :id ORDER BY username")
+    List<User> getAllOtherUsers(int id);
 }
