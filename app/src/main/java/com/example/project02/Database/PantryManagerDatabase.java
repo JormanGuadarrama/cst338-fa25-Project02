@@ -82,6 +82,10 @@ public abstract class  PantryManagerDatabase extends RoomDatabase {
             db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Olive Oil', 'Fats/Oils', 'Extra virgin olive oil')");
             db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Avocado', 'Fats/Oils', 'Healthy fat-rich fruit')");
 
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Ketchup', 'Condiments', 'Tomato-based condiment commonly used with fries and burgers')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Mustard', 'Condiments', 'Tangy condiment made from mustard seeds')");
+            db.execSQL("INSERT INTO " + FOODS_TABLE + " (name, family, description) VALUES ('Mayonnaise', 'Condiments', 'Creamy condiment made from eggs and oil')");
+
             // Insert Default Users
             db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('admin1', 'admin1', 1)");
             db.execSQL("INSERT INTO " + USER_TABLE + " (username, password, isAdmin) VALUES ('testuser1', 'testuser1', 0)");
