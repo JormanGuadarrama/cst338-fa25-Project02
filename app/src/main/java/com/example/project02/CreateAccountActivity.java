@@ -26,24 +26,29 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class CreateAccountActivity extends AppCompatActivity {
-
+    // TextInputLayouts used to show error messages under the fields
     private TextInputLayout usernameLayout, passwordLayout, confirmLayout;
+    // Actual editable text fields
     private TextInputEditText usernameField, passwordField, confirmField;
+    // Switch to mark the new user as an admin or regular user
     private MaterialSwitch adminSwitch;
+    // TextView to display generic error messages at the bottom
     private TextView errorMessage;
+    // Buttons for creating an account or cancelling the operation
     private MaterialButton createButton, cancelButton;
-
+    // DAO to interact with the User table in the database
     private UserDAO userDao;
+    // Single-threaded executor for running DB operations off the main (UI) thread
     private final ExecutorService io = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
-
+        // Get a reference to the database and the User DAO
         PantryManagerDatabase db = PantryManagerDatabase.getDatabase(getApplicationContext());
         userDao = db.userDAO();
-
+        //Hookup layout references to variables
         usernameLayout = findViewById(R.id.usernameLayout);
         passwordLayout = findViewById(R.id.passwordLayout);
         confirmLayout  = findViewById(R.id.confirmLayout);
