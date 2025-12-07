@@ -7,7 +7,6 @@ import com.example.project02.AddFoodActivity;
 
 public class IntentFactory {
 
-    // Private constructor to prevent instantiation
     private IntentFactory() {}
 
     public static Intent getAddFoodActivityIntent(Context context) {
