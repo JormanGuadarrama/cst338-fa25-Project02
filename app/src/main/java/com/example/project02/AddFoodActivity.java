@@ -29,11 +29,10 @@ public class AddFoodActivity extends AppCompatActivity {
         // Set the toolbar as the action bar
         setSupportActionBar(binding.addFoodToolbar);
 
-        // Enable the back button and set the title
+        // Enable the back button in the action bar
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("back to food list");
         }
 
         db = PantryManagerDatabase.getDatabase(this);
