@@ -4,4 +4,9 @@
     <string name="title_pantry">My Pantry</string>
     <string name="title_account">Account</string>
     <string name="admin_controls">Admin Controls</string>
+    <string name="add_food">Add Food</string>
+    <string name="food_name">Food Name</string>
+    <string name="description">Description</string>
+    <string name="food_family">Food Family</string>
+    <string name="save_food_item">Save Food Item</string>
 </resources>
