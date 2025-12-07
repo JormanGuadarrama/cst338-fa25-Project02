@@ -26,8 +26,10 @@ public class AddFoodActivity extends AppCompatActivity {
         binding = ActivityAddFoodBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Set the toolbar as the action bar
         setSupportActionBar(binding.addFoodToolbar);
 
+        // Enable the back button in the action bar
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -42,6 +44,7 @@ public class AddFoodActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        // Handle the back button click
         finish();
         return true;
     }
@@ -74,7 +77,7 @@ public class AddFoodActivity extends AppCompatActivity {
             db.foodDAO().insert(newFood);
             runOnUiThread(() -> {
                 Toast.makeText(this, "Food item saved", Toast.LENGTH_SHORT).show();
-                finish();
+                finish(); // Go back to the previous activity
             });
         });
     }

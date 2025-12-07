@@ -28,14 +28,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp">
-            <!--                Replace Below with @drawable/ic_logo-->
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_account_black_24dp"
-                android:contentDescription="@string/app_name"
+
+            <TextView
+                android:id="@+id/welcome_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome to Pantry Manager"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:textColor="?attr/colorOnBackground"
                 android:layout_marginBottom="12dp"/>
 
             <TextView
@@ -44,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sign in"
                 android:textStyle="bold"
-                android:textSize="24sp"
+                android:textSize="22sp"
                 android:textColor="?attr/colorOnBackground"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp"/>
